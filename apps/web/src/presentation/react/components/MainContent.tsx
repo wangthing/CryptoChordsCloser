@@ -6,6 +6,7 @@ import { Options } from './Options'
 import { Transactions } from './Transactions'
 import desktopBackground from '/image/background/desktop.svg'
 import mobileBackground from '/image/background/mobile.svg'
+import { Piano } from './Piano'
 
 // This constant is used to multiply the y position of the cubes
 // to allow the cubes extrapolate the top of the component
@@ -23,7 +24,7 @@ export function MainContent(props: {
       <img src={desktopBackground} className='max-sm:hidden w-full absolute pointer-events-none' />
       <div className='relative w-[78.34vw] mx-auto'>
         <Cubes className='relative w-[96%] mx-auto h-[25vw] mb-0' yMultiplier={CUBES_Y_MULTIPLIER} bottomOffset={CUBES_BOTTOM_OFFSET} />
-        <Keyboard className='relative w-[97.88%] mx-auto z-10' />
+        <Piano />
         <div className='flex max-lg:flex-col lg:flex-row lg:gap-4 justify-between lg:mt-24 max-lg:mt-8'>
           <Card className='lg:basis-[30%] lg:grow-0 max-lg:mb-5 lg:mb-auto'>
             <Options />
