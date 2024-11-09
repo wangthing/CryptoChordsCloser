@@ -10,7 +10,7 @@ export const Transactions = function (props: {
 }) {
   const { transactionsPresenter } = useContext(presenters)
   const { transactions } = usePresenter<TransactionsPresenter, TransactionsPresenterState>(transactionsPresenter)
-
+  console.log(transactions)
   return (
     <div className={`${props.className ?? ''}`}>
       <span className='inline-block md:text-2xl max-md:text-xl font-extrabold mt-1'>Transactions</span>
