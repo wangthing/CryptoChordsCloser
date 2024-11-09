@@ -3,7 +3,7 @@ import './index.css'
 
 export const Piano = function () {
     function playNote(e: KeyboardEvent) {
-        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`) as HTMLAudioElement | null;
         const key = document.querySelector(`.key[data-key="${e?.keyCode}"]`);
         
         if (!key) return;
@@ -14,9 +14,8 @@ export const Piano = function () {
         key.classList.add("playing");
         note && (note.innerHTML = keyNote);
         if(audio) {
-            const audioElement = audio as HTMLAudioElement
-            audioElement.currentTime = 0;
-            audioElement.play();
+            audio.currentTime = 0;
+            audio.play();
         }
 
     }
