@@ -4,7 +4,6 @@ import { TransactionsPresenterState } from "../../../common/presenter/transactio
 import { usePresenter } from "../../hooks/usePresenter"
 import { TransactionsPresenter } from "../../../common/presenter/transactions/TransactionsPresenter"
 import { presenters } from "../../context"
-import { TxTypesEnum } from "@cryptochords/shared"
 const PianoKeyList = [
     {
         "key": "65",
@@ -78,14 +77,14 @@ const PianoKeyList = [
 
 const getKeyFromTxType = (type: string) => {
     switch (type) {
-        case TxTypesEnum.Block:
+        case 'New Block':
             return '65'
-        case TxTypesEnum.Eth:
-            return '87'
-        case TxTypesEnum.Pop:
-            return '83'
-        case TxTypesEnum.Btc:
-            return '69'
+        case 'ETH':
+            return '68'
+        case 'PoP':
+            return '71'
+        case 'BTC':
+            return '76'
         default:
             return '65'
     }
@@ -125,19 +124,19 @@ export const Piano = function () {
         e.target.classList.remove("playing");
     }
 
-    function onKeyDown (e: KeyboardEvent) {
-        const key = document.querySelector(`.key[data-key="${e?.keyCode}"]`);
-        if(key) {
-            playNote(e?.keyCode)
-        }
+    // function onKeyDown (e: KeyboardEvent) {
+    //     const key = document.querySelector(`.key[data-key="${e?.keyCode}"]`);
+    //     if(key) {
+    //         playNote(e?.keyCode)
+    //     }
 
-    }
+    // }
     
 
     useEffect(() => {
         const keys = document.querySelectorAll(".key");
         keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-        window.addEventListener("keydown", onKeyDown);
+        // window.addEventListener("keydown", onKeyDown);
 
         const timeId =  setInterval(() => {
             const txList = txRef.current
@@ -151,7 +150,7 @@ export const Piano = function () {
                 setTotalTx(txList.splice(1))
                 playNote(Number(key))
             }
-        }, 800000);
+        }, 800);
         return () => clearInterval(timeId)
     }, [])
 

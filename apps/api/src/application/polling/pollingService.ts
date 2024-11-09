@@ -9,9 +9,10 @@ export class PollingService {
   execute(wss: WebSocketServer, url: string): void {
     this.blockRepository.execute(url)
 
-    // this.blockRepository.on(TxTypesEnum.Block, (l2Block: L2Block) => BroadcastToClients(wss, l2Block));
+    this.blockRepository.on(TxTypesEnum.Block, (l2Block: L2Block) => BroadcastToClients(wss, l2Block, null));
     this.blockRepository.on(TxTypesEnum.Eth, (l2Block: L2Block) => BroadcastToClients(wss, l2Block, null));
     this.blockRepository.on(TxTypesEnum.Btc, (btcBlock: BtcBlock) => BroadcastToClients(wss, null, btcBlock));
+    this.blockRepository.on(TxTypesEnum.Pop, (l2Block: L2Block) => BroadcastToClients(wss, l2Block, null));
   }
 
   stop() {

@@ -7,7 +7,7 @@ const initalState: TransactionsPresenterState = {
   transactions: [],
 }
 
-const titleMap: Map<TxTypesEnum, string> = new Map([
+export const titleMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Block, 'New Block'],
   [TxTypesEnum.Eth, 'ETH'],
   [TxTypesEnum.Pop, 'PoP'],
