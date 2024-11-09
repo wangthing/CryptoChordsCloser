@@ -2,8 +2,8 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import './index.css'
 import { TransactionsPresenterState } from "../../../common/presenter/transactions/TransactionsPresenterState"
 import { usePresenter } from "../../hooks/usePresenter"
-import { OptionsPresenter } from '../../common/presenter/options/OptionsPresenter'
-import { OptionsPresenterState } from '../../common/presenter/options/OptionsPresenterState'
+import { OptionsPresenter } from '../../../common/presenter/options/OptionsPresenter'
+import { OptionsPresenterState } from '../../../common/presenter/options/OptionsPresenterState'
 import { TransactionsPresenter } from "../../../common/presenter/transactions/TransactionsPresenter"
 import { presenters } from "../../context"
 const PianoKeyList = [

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { TransactionsPresenter } from '../../common/presenter/transactions/TransactionsPresenter'
 import { TransactionsPresenterState } from '../../common/presenter/transactions/TransactionsPresenterState'
 import { presenters } from '../context'
@@ -10,13 +10,17 @@ export const Transactions = function (props: {
 }) {
   const { transactionsPresenter } = useContext(presenters)
   const { transactions } = usePresenter<TransactionsPresenter, TransactionsPresenterState>(transactionsPresenter)
-  console.log(transactions)
+  const [totalTx, setTotalTx] = useState<TransactionsPresenterState['transactions']>([])
+  useEffect(() => {
+      setTotalTx([...totalTx, ...transactions])
+  }, [transactions])
+
   return (
     <div className={`${props.className ?? ''}`}>
       <span className='inline-block md:text-2xl max-md:text-xl font-extrabold mt-1'>Transactions</span>
-      <ul className='flex flex-col-reverse mt-4'>
+      <ul className='flex flex-col-reverse mt-4' style={{'maxHeight': '500px', overflow: 'auto'}}>
         {
-          transactions.map((transaction) => (
+          totalTx.map((transaction) => (
             <li key={`${transaction.id}`}>
               <Transaction
                 type={transaction.type}
