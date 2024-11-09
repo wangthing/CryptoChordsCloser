@@ -76,7 +76,7 @@ const PianoKeyList = [
     }
 ]
 
-const getKetFromTxType = (type: TxTypesEnum) => {
+const getKeyFromTxType = (type: string) => {
     switch (type) {
         case TxTypesEnum.Block:
             return '65'
@@ -143,9 +143,11 @@ export const Piano = function () {
             const txList = txRef.current
             if(txList.length) {
                 // sort by tx type
-                const curIndex = Math.floor(Math.random() * PianoKeyList.length)
-                const key = PianoKeyList[curIndex].key
-                console.log(key)
+                const curTx = txList[0]
+                const { type } = curTx
+                const key = getKeyFromTxType(type)
+                // const curIndex = Math.floor(Math.random() * PianoKeyList.length)
+                // const key = PianoKeyList[curIndex].key
                 setTotalTx(txList.splice(1))
                 playNote(Number(key))
             }

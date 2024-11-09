@@ -50,24 +50,23 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
             console.log("block with count: ", hash, blockDetail.tx_count);
             const blockTxnsResp = await fetch("https://blockstream.info/testnet/api/block/" + hash + "/txids");
             const blockTxns = await blockTxnsResp.json();
-            console.log(blockTxns)
-            // blockTxns.forEach(async (txnHash: string) => {
-            //   try {
-            //     const txnDetailResp = await fetch("https://blockstream.info/testnet/api/tx/" + txnHash);
-            //     const detail = await txnDetailResp.json();
-            //     detail.vout.forEach((script: any) => {
-            //       if (script.scriptpubkey_type == "op_return") {
-            //         if (script.scriptpubkey_asm.startsWith("OP_RETURN OP_PUSHDATA1 48454d4901")) {
-            //           this.emit(TxTypesEnum.Pop, BtcBlock.create({txType: TxType.create(TxTypesEnum.Pop), 
-            //                       address: Address.create(detail.txid)}))
-            //         }
-            //       }
-            //     })
-            //   } catch (error) {
-            //     console.log(error)
-            //   }
-            //   // console.log(detail.vout);
-            // })
+            blockTxns.slice(0,5).forEach(async (txnHash: string) => {
+              try {
+                const txnDetailResp = await fetch("https://blockstream.info/testnet/api/tx/" + txnHash);
+                const detail = await txnDetailResp.json();
+                detail.vout.forEach((script: any) => {
+                  if (script.scriptpubkey_type == "op_return") {
+                    if (script.scriptpubkey_asm.startsWith("OP_RETURN OP_PUSHDATA1 48454d4")) {
+                      this.emit(TxTypesEnum.Btc, BtcBlock.create({txType: TxType.create(TxTypesEnum.Pop), 
+                                  address: Address.create(detail.txid)}))
+                    }
+                  }
+                })
+              } catch (error) {
+                console.log(error)
+              }
+              // console.log(detail.vout);
+            })
           }
         }
       }
