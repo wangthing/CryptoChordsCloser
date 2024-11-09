@@ -8,21 +8,25 @@ const initalState: TransactionsPresenterState = {
 }
 
 export const titleMap: Map<TxTypesEnum, string> = new Map([
-  [TxTypesEnum.Block, 'New Block'],
+  [TxTypesEnum.Block, 'ETH BLK'],
   [TxTypesEnum.Eth, 'ETH'],
   [TxTypesEnum.Pop, 'PoP'],
-  [TxTypesEnum.Btc, 'BTC']
+  [TxTypesEnum.Btc, 'BTC'],
+  [TxTypesEnum.BtcBlock, 'BTC BLK'],
+
 ])
 
 const rgbMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Block, '#10FF2A'],
   [TxTypesEnum.Eth, '#00D3FF'],
   [TxTypesEnum.Pop, '#DC53FF'],
-  [TxTypesEnum.Btc, '#FFB200']
+  [TxTypesEnum.Btc, '#FFB200'],
+  [TxTypesEnum.BtcBlock, '#FFA500']
 ])
 
 const messageMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Block, 'created by'],
+  [TxTypesEnum.BtcBlock, 'digged by'],
   [TxTypesEnum.Eth, 'transaction by'],
   [TxTypesEnum.Pop, 'transaction by'],
   [TxTypesEnum.Btc, 'transaction by']
@@ -30,6 +34,7 @@ const messageMap: Map<TxTypesEnum, string> = new Map([
 
 const urlPatternMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Block, import.meta.env['VITE_EXPLORER_BLOCK_URL']],
+  [TxTypesEnum.BtcBlock, import.meta.env['VITE_EXPLORER_BTC_BLOCK_URL']],
   [TxTypesEnum.Eth, import.meta.env['VITE_EXPLORER_ETH_URL']],
   [TxTypesEnum.Pop, import.meta.env['VITE_EXPLORER_POP_URL']],
   [TxTypesEnum.Btc, import.meta.env['VITE_EXPLORER_BTC_URL']]

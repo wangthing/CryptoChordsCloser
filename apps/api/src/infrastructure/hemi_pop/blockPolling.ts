@@ -36,9 +36,9 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
         const hash = await hashResp.text()
         if (hash) {
           console.log(hash, 'new btc block hash');
-          this.emit(TxTypesEnum.Block, BtcBlock.create({
-            txType: TxType.create(TxTypesEnum.Block), 
-            address: Address.create("btc_hash:" + hash.toString())
+          this.emit(TxTypesEnum.BtcBlock, BtcBlock.create({
+            txType: TxType.create(TxTypesEnum.BtcBlock),
+            address: Address.create(hash.toString())
           }))
           const blockDetailApi = "https://blockstream.info/testnet/api/block/" + hash
           console.log(blockDetailApi) 
@@ -49,23 +49,27 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
             console.log("block with count: ", hash, blockDetail.tx_count);
             const blockTxnsResp = await fetch("https://blockstream.info/testnet/api/block/" + hash + "/txids");
             const blockTxns = await blockTxnsResp.json();
-            blockTxns.slice(0,5).forEach(async (txnHash: string) => {
+            blockTxns.slice(1, 10).forEach(async (txnHash: string) => {
+              const txnDetailResp = await fetch("https://blockstream.info/testnet/api/tx/" + txnHash);
+              const detail = await txnDetailResp.json();
+              let pop = false;
               try {
-                const txnDetailResp = await fetch("https://blockstream.info/testnet/api/tx/" + txnHash);
-                const detail = await txnDetailResp.json();
                 detail.vout.forEach((script: any) => {
                   if (script.scriptpubkey_type == "op_return") {
                     if (script.scriptpubkey_asm.startsWith("OP_RETURN OP_PUSHDATA1 48454d4")) {
                       this.emit(TxTypesEnum.Pop, BtcBlock.create({txType: TxType.create(TxTypesEnum.Pop), 
-                        address: Address.create("hemi_pop:" + detail.txid)}))
+                        address: Address.create(detail.txid)}));
+                        console.log("new pop txn", detail.txid);
+                        pop = true;
                     }
-                  } else {
-                    this.emit(TxTypesEnum.Btc, BtcBlock.create({txType: TxType.create(TxTypesEnum.Btc), 
-                      address: Address.create("btc_txn:" + detail.txid)}))
                   }
                 })
               } catch (error) {
                 console.log(error)
+              }
+              if (!pop) {
+                this.emit(TxTypesEnum.Btc, BtcBlock.create({txType: TxType.create(TxTypesEnum.Btc), 
+                  address: Address.create(detail.txid)}))
               }
               // console.log(detail.vout);
             })

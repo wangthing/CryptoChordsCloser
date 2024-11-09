@@ -41,7 +41,7 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
 
         if (block.transactions) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          block.transactions.forEach((tx: any) => {
+          block.transactions.slice(1, 5).forEach((tx: any) => {
             if (tx.type.toString() === BlockTypesEnum.EIP1559) {
               console.log('New eth tx from', tx.from);
               this.emit(TxTypesEnum.Eth, L2Block.create({

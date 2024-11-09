@@ -1,6 +1,8 @@
 export enum TxTypesEnum {
   Block = 'block',
+  BtcBlock = 'btc_block',
   Eth = 'eth',
   Btc = 'btc',
-  Pop = 'pop'
+  Pop = 'pop',
+  Bridge = 'bridge'
 }

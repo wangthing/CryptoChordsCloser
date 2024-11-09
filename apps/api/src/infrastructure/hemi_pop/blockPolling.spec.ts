@@ -50,7 +50,7 @@ describe('BlockPollingRepository', () => {
   });
 
   it('should emit "Block" event for new blocks with no transactions', async () => {
-    await blockPollingRepository.checkNewBlocks(mockWeb3);
+    await blockPollingRepository.checkNewBlocks();
     expect(blockPollingRepository.emit).toHaveBeenCalledWith('Block', expect.anything());
   });
 
@@ -62,7 +62,7 @@ describe('BlockPollingRepository', () => {
       ],
     });
 
-    await blockPollingRepository.checkNewBlocks(mockWeb3);
+    await blockPollingRepository.checkNewBlocks();
     expect(blockPollingRepository.emit).toHaveBeenCalledWith('Block', expect.anything());
     expect(blockPollingRepository.emit).toHaveBeenCalledWith('Eth', expect.anything());
   });
