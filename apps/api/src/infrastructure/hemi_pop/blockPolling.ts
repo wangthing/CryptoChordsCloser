@@ -25,7 +25,6 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
   async checkNewBlocks(): Promise<void> {
     try {
       
-
       const currentBlockNumberResp = await fetch("https://blockstream.info/testnet/api/blocks/tip/height");
       const currentBlockNumber = BigInt(parseInt(await currentBlockNumberResp.text()));
       console.log("Current block height: ", currentBlockNumber)
@@ -37,9 +36,9 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
         const hash = await hashResp.text()
         if (hash) {
           console.log(hash, 'new btc block hash');
-          this.emit(TxTypesEnum.Btc, BtcBlock.create({
-            txType: TxType.create(TxTypesEnum.Btc), 
-            address: Address.create(hash.toString())
+          this.emit(TxTypesEnum.Block, BtcBlock.create({
+            txType: TxType.create(TxTypesEnum.Block), 
+            address: Address.create("btc_hash:" + hash.toString())
           }))
           const blockDetailApi = "https://blockstream.info/testnet/api/block/" + hash
           console.log(blockDetailApi) 
@@ -57,9 +56,12 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
                 detail.vout.forEach((script: any) => {
                   if (script.scriptpubkey_type == "op_return") {
                     if (script.scriptpubkey_asm.startsWith("OP_RETURN OP_PUSHDATA1 48454d4")) {
-                      this.emit(TxTypesEnum.Btc, BtcBlock.create({txType: TxType.create(TxTypesEnum.Pop), 
-                                  address: Address.create(detail.txid)}))
+                      this.emit(TxTypesEnum.Pop, BtcBlock.create({txType: TxType.create(TxTypesEnum.Pop), 
+                        address: Address.create("hemi_pop:" + detail.txid)}))
                     }
+                  } else {
+                    this.emit(TxTypesEnum.Btc, BtcBlock.create({txType: TxType.create(TxTypesEnum.Btc), 
+                      address: Address.create("btc_txn:" + detail.txid)}))
                   }
                 })
               } catch (error) {
