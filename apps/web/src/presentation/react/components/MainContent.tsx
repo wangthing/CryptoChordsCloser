@@ -1,6 +1,5 @@
 import { Card } from './Card'
 import { Cubes } from './Cubes'
-import { Keyboard } from './Keyboard'
 import { Social } from './Social'
 import { Options } from './Options'
 import { Transactions } from './Transactions'

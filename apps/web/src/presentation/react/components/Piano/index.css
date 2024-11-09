@@ -132,7 +132,3 @@ h2 {
   transition: opacity .3s ease-out;
   font-size: 20px;
 }
-
-.keys:hover .hints {
-  opacity: 1;
-}

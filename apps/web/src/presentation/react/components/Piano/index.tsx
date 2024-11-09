@@ -1,41 +1,34 @@
 import { useEffect } from "react"
 import './index.css'
 
-export const Piano = function (props: {
-    className?: string
-    children?: React.ReactNode
-  }) {
-    function playNote(e) {
+export const Piano = function () {
+    function playNote(e: KeyboardEvent) {
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-      
+        const key = document.querySelector(`.key[data-key="${e?.keyCode}"]`);
+        
         if (!key) return;
-      
-        const keyNote = key.getAttribute("data-note");
+        
+        const keyNote = key.getAttribute("data-note") || '';
         const note = document.querySelector(".nowplaying");
-      
+        
         key.classList.add("playing");
-        note.innerHTML = keyNote;
-        audio.currentTime = 0;
-        audio.play();
-      }
+        note && (note.innerHTML = keyNote);
+        if(audio) {
+            const audioElement = audio as HTMLAudioElement
+            audioElement.currentTime = 0;
+            audioElement.play();
+        }
+
+    }
       
-      function removeTransition(e) {
+    function removeTransition(e: any ) {
         if (e.propertyName !== "transform") return;
-        this.classList.remove("playing");
-      }
-      
-      function hintsOn(e, index) {
-        e.setAttribute("style", "transition-delay:" + index * 50 + "ms");
-      }
+        e.target.classList.remove("playing");
+    }
       
     useEffect(() => {
-        const keys = document.querySelectorAll(".key"),
-        hints = document.querySelectorAll(".hints");
-        hints.forEach(hintsOn);
-        
+        const keys = document.querySelectorAll(".key");
         keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-        
         window.addEventListener("keydown", playNote);
     }, [])
 
