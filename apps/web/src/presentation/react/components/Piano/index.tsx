@@ -1,7 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import './index.css'
 import { TransactionsPresenterState } from "../../../common/presenter/transactions/TransactionsPresenterState"
 import { usePresenter } from "../../hooks/usePresenter"
+import { OptionsPresenter } from '../../common/presenter/options/OptionsPresenter'
+import { OptionsPresenterState } from '../../common/presenter/options/OptionsPresenterState'
 import { TransactionsPresenter } from "../../../common/presenter/transactions/TransactionsPresenter"
 import { presenters } from "../../context"
 const PianoKeyList = [
@@ -90,6 +92,8 @@ const getKeyFromTxType = (type: string) => {
     }
 }
 export const Piano = function () {
+    const { optionsPresenter } = useContext(presenters)
+    const { muted } = usePresenter<OptionsPresenter, OptionsPresenterState>(optionsPresenter)
     const { transactionsPresenter } = useContext(presenters)
     const { transactions } = usePresenter<TransactionsPresenter, TransactionsPresenterState>(transactionsPresenter)
     const [totalTx, setTotalTx] = useState<TransactionsPresenterState['transactions']>([])
@@ -103,7 +107,10 @@ export const Piano = function () {
 
     }, [totalTx])
 
-    function playNote(key: number) {
+    const playNote =  useCallback((key: number) => {
+        if(muted) {
+            return
+        }
         if (!key) return;
         const keyEle = document.querySelector(`.key[data-key="${key}"]`);
         const keyNote = keyEle?.getAttribute("data-note") || '';
@@ -117,8 +124,11 @@ export const Piano = function () {
             audio.play();
         }
 
-    }
-      
+    }, [muted])
+    const playNoteRef = useRef(playNote);
+    useEffect(() => {
+        playNoteRef.current = playNote
+    }, [playNote])
     function removeTransition(e: any ) {
         if (e.propertyName !== "transform") return;
         e.target.classList.remove("playing");
@@ -148,7 +158,7 @@ export const Piano = function () {
                 // const curIndex = Math.floor(Math.random() * PianoKeyList.length)
                 // const key = PianoKeyList[curIndex].key
                 setTotalTx(txList.splice(1))
-                playNote(Number(key))
+                playNoteRef.current(Number(key))
             }
         }, 800);
         return () => clearInterval(timeId)
