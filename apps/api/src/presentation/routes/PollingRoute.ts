@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
-import { BlockWebsocketRepository } from '../../infrastructure/repositories/blockWebsocket';
-import { BlockPollingRepository } from '../../infrastructure/repositories/blockPolling';
+import { BlockWebsocketRepository } from '../../infrastructure/hemi_pop/blockWebsocket';
+import { BlockPollingRepository } from '../../infrastructure/hemi_pop/blockPolling';
 import { PollingService } from '../../application/polling/pollingService';
 import 'dotenv/config';
 
