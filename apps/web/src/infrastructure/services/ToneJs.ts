@@ -74,7 +74,8 @@ export class ToneJS implements SoundService {
   }
 
   async playSound(pitch: string, octave: number, instrument: string): Promise<void> {
-    (await ToneJS.getInstrument(instrument)).triggerAttack(`${pitch}${octave}`)
+    console.log(pitch, octave, instrument)
+    // (await ToneJS.getInstrument(instrument)).triggerAttack(`${pitch}${octave}`)
   }
 
   async stopSound(pitch: string, octave: number, instrument: string): Promise<void> {

@@ -13,6 +13,7 @@ export const titleMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Pop, 'PoP'],
   [TxTypesEnum.Btc, 'BTC'],
   [TxTypesEnum.BtcBlock, 'BTC BLK'],
+  [TxTypesEnum.Bridge, 'Bridge'],
 
 ])
 

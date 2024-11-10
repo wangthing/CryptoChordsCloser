@@ -33,12 +33,14 @@ export const Options = function (props: {
         displayLoadingMessage && <span>Loading instrument sounds...</span>
       }
       {
-        displayInstrumentPicker && <Select
-          className='min-w-40'
-          value={selectedInstrument}
-          onChange={(value) => value && optionsPresenter.setInstrument(value)}
-          options={instruments}
-        />
+        displayInstrumentPicker && <div style={{display: 'none'}}>
+          <Select
+            className='min-w-40'
+            value={selectedInstrument}
+            onChange={(value) => value && optionsPresenter.setInstrument(value)}
+            options={instruments}
+          />
+        </div>
         
       }
 

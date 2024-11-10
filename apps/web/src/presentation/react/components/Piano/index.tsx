@@ -6,6 +6,7 @@ import { OptionsPresenter } from '../../../common/presenter/options/OptionsPrese
 import { OptionsPresenterState } from '../../../common/presenter/options/OptionsPresenterState'
 import { TransactionsPresenter } from "../../../common/presenter/transactions/TransactionsPresenter"
 import { presenters } from "../../context"
+import { TxTypesEnum } from "@cryptochords/shared"
 const PianoKeyList = [
     {
         "key": "65",
@@ -76,10 +77,10 @@ const PianoKeyList = [
         "src": "http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"
     }
 ]
-
+TxTypesEnum
 const getKeyFromTxType = (type: string) => {
     switch (type) {
-        case 'New Block':
+        case 'ETH BLK':
             return '65'
         case 'ETH':
             return '68'
@@ -87,8 +88,12 @@ const getKeyFromTxType = (type: string) => {
             return '71'
         case 'BTC':
             return '76'
+        case 'BTC BLK':
+            return '186'
+         case 'Bridge':
+            return '79'
         default:
-            return '65'
+            return '186'
     }
 }
 export const Piano = function () {
@@ -101,7 +106,7 @@ export const Piano = function () {
     useEffect(() => {
         setTotalTx([...totalTx, ...transactions])
     }, [transactions])
-
+    console.log(transactions)
     useEffect(() => {
         txRef.current = totalTx;
 
@@ -160,13 +165,13 @@ export const Piano = function () {
                 setTotalTx(txList.splice(1))
                 playNoteRef.current(Number(key))
             }
-        }, 800);
+        }, 400);
         return () => clearInterval(timeId)
     }, [])
 
     return (
         <div id="main">
-            <div className="nowplaying"></div>
+            {/* <div className="nowplaying"></div> */}
             <div className="keys">
             <div data-key="65" className="key" data-note="C">
                 <span className="hints">A</span>

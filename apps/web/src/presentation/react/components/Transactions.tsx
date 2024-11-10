@@ -12,15 +12,15 @@ export const Transactions = function (props: {
   const { transactions } = usePresenter<TransactionsPresenter, TransactionsPresenterState>(transactionsPresenter)
   const [totalTx, setTotalTx] = useState<TransactionsPresenterState['transactions']>([])
   useEffect(() => {
-      setTotalTx([...totalTx, ...transactions])
+      setTotalTx([...transactions, ...totalTx.slice(0,12)])
   }, [transactions])
 
   return (
     <div className={`${props.className ?? ''}`}>
       <span className='inline-block md:text-2xl max-md:text-xl font-extrabold mt-1'>Transactions</span>
-      <ul className='flex flex-col-reverse mt-4' style={{'maxHeight': '500px', overflow: 'auto'}}>
+      <ul className='flex flex-col-reverse mt-4' >
         {
-          totalTx.map((transaction) => (
+          totalTx.slice(0,12).map((transaction) => (
             <li key={`${transaction.id}`}>
               <Transaction
                 type={transaction.type}
