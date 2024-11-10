@@ -161,9 +161,10 @@ export const Piano = function () {
                 const { type } = curTx
                 const key = getKeyFromTxType(type)
                 // const curIndex = Math.floor(Math.random() * PianoKeyList.length)
-                // const key = PianoKeyList[curIndex].key
+                // const randomKey = PianoKeyList[curIndex].key
                 setTotalTx(txList.splice(1))
                 playNoteRef.current(Number(key))
+                playNoteRef.current(71)
             }
         }, 400);
         return () => clearInterval(timeId)
