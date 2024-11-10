@@ -39,13 +39,13 @@ Both the API and the Web application follow the Domain-Driven Design (DDD) princ
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:hemilabs/CryptoChords.git
+git git@github.com:wangthing/CryptoChordsCloser.git
 ```
 
 2. Open the project folder:
 
 ```bash
-cd CryptoChords
+cd CryptoChordsCloser
 ```
 
 3. Install the dependencies:

@@ -1,16 +1,19 @@
 # Coding Challenge Submission <br><br>
 
 ## Description
-Describe your project here
+collaborate with 0x77777
 
 ## Prerequisites, Dependencies, Versions
-Please add anything here you've built that requires the above specifics
+check them at file package.json
 
 ## Licensing
-Please state if license is CC, MIT or ISC or other (please no GPL)
+MIT 
 
 ## Outside Libraries
-Link any outside open source libraries used
+
 
 ## Steps
-Tell us how to run it locally
+`npm install` to install the dependencies
+`npm run build`
+`npm run dev`
+then you can check the project in browser  http://localhost:5173/
